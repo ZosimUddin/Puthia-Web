@@ -1,0 +1,81 @@
+import React, { useState } from "react";
+import { ArrowLeft, BookOpen, GraduationCap } from "lucide-react";
+
+interface Props { onGoBack: () => void; }
+
+export const Academicians: React.FC<Props> = ({ onGoBack }) => {
+  const [filter, setFilter] = useState<"founders" | "researchers">("founders");
+
+  return (
+    <div className="space-y-4 font-sans pb-10">
+      <div 
+        className="relative w-full h-48 rounded-b-[32px] flex flex-col justify-center p-8 shadow-md overflow-hidden"
+        style={{ background: "linear-gradient(135deg, #1A237E, #4A148C)" }}
+      >
+        <button
+          onClick={onGoBack}
+          className="absolute top-4 left-4 p-2 bg-white/20 hover:bg-white/30 rounded-full text-white transition-colors backdrop-blur-md"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+        <div className="mt-6 flex flex-col items-center text-center">
+          <span className="inline-block px-3 py-1 bg-white/20 text-white text-[11px] font-extrabold rounded-full mb-2 backdrop-blur-md tracking-wider border border-white/10 uppercase">
+            আলোকিত মানুষ
+          </span>
+          <h1 className="text-2xl font-black text-white drop-shadow-sm mb-1">
+            গুণী শিক্ষাবিদ প্যানেল
+          </h1>
+          <p className="text-purple-100 text-xs font-medium max-w-[280px]">
+             পুঠিয়া উপজেলার বিভিন্ন শিক্ষাপ্রতিষ্ঠানের প্রতিষ্ঠাতা, প্রবীণ শিক্ষক এবং জাতীয় পর্যায়ে অবদান রাখা শিক্ষাবিদদের প্রোফাইল।
+          </p>
+        </div>
+      </div>
+      <div className="px-4 space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            onClick={() => setFilter("founders")}
+            className={`py-2.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all outline-none ${
+              filter === "founders"
+                ? "bg-[#1A237E] text-white shadow-md border border-[#1A237E]"
+                : "bg-white text-gray-600 border border-gray-200"
+            }`}
+          >
+            <BookOpen className={`w-4 h-4 ${filter === "founders" ? 'text-[#E040FB]' : 'text-gray-400'}`}/>
+            প্রাতিষ্ঠানিক প্রতিষ্ঠাতা
+          </button>
+          <button
+            onClick={() => setFilter("researchers")}
+            className={`py-2.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all outline-none ${
+              filter === "researchers"
+                ? "bg-[#1A237E] text-white shadow-md border border-[#1A237E]"
+                : "bg-white text-gray-600 border border-gray-200"
+            }`}
+          >
+            <GraduationCap className={`w-4 h-4 ${filter === "researchers" ? 'text-[#E040FB]' : 'text-gray-400'}`}/>
+            গবেষক ও লেখক
+          </button>
+        </div>
+
+        <div className="space-y-4">
+          <div className={`bg-white rounded-2xl p-5 shadow-sm border border-gray-100 border-l-[6px] ${filter === 'founders' ? 'border-l-sky-500' : 'border-l-amber-500'} flex gap-4 items-start relative overflow-hidden animate-fade-in`}>
+             <div className="w-16 h-16 rounded-full bg-purple-50 border border-purple-100 flex-shrink-0 flex items-center justify-center">
+              <span className="text-purple-300 text-xs text-center font-medium leading-tight">ছবি<br/>নেই</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-gray-800 mb-0.5">[শিক্ষাবিদের নাম]</h3>
+              <p className="text-sm font-medium text-gray-600 mb-2 border-b border-gray-100 pb-2">
+                <span className="font-bold text-[#1A237E]">পদবী/পরিচয়:</span> প্রাক্তন প্রধান শিক্ষক, পুঠিয়া পিএন সরকারি উচ্চ বিদ্যালয়।
+              </p>
+              <p className="text-xs text-gray-600 leading-relaxed bg-purple-50/50 p-2.5 rounded-xl border border-purple-100/50 mb-3 block">
+                <span className="font-bold text-gray-800">📝 অবদান:</span> পুঠিয়া অঞ্চলে নারী শিক্ষা ও সাধারণ শিক্ষার প্রসারে আমৃত্যু অবদান রেখে গেছেন।
+              </p>
+              <button className="w-full py-2.5 text-xs font-bold text-white bg-[#1A237E] rounded-xl hover:bg-indigo-900 transition-colors border border-indigo-900 flex items-center justify-center gap-1.5 shadow-md shadow-indigo-200">
+                📖 সম্পূর্ণ জীবনী
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

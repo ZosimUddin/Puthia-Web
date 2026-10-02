@@ -1,0 +1,39 @@
+{
+  "id": "/",
+  "name": "আমাদের পুঠিয়া - স্মার্ট সিটিজেন পোর্টাল",
+  "short_name": "পুঠিয়া পোর্টাল",
+  "description": "পুঠিয়া উপজেলার সকল সেবা, হাসপাতাল, রক্তদাতা, শিক্ষা প্রতিষ্ঠান ও রাজবাড়ির তথ্য এক অ্যাপে",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#064e3b",
+  "theme_color": "#064e3b",
+  "scope": "/",
+  "categories": ["government", "utilities", "travel", "medical"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

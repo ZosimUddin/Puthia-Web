@@ -1,0 +1,2196 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Account",
+      "description": "Core user account linking auth UID and roles",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Auth UID foreign key"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "user",
+            "moderator",
+            "editor",
+            "admin",
+            "super_admin"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "suspended",
+            "pending"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "uid",
+        "email",
+        "role"
+      ]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Extended citizen or merchant profile details with location references",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        },
+        "villageId": {
+          "type": "string",
+          "description": "Foreign key to Village"
+        },
+        "bloodGroup": {
+          "type": "string"
+        },
+        "photoURL": {
+          "type": "string"
+        },
+        "isVerified": {
+          "type": "boolean"
+        },
+        "points": {
+          "type": "number"
+        },
+        "rewardBadge": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "userId",
+        "fullName"
+      ]
+    },
+    "Location": {
+      "title": "Location Area",
+      "description": "Geographical area definition (Puthia, Rajshahi)",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "upazila": {
+          "type": "string"
+        },
+        "district": {
+          "type": "string"
+        },
+        "division": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "upazila"
+      ]
+    },
+    "Union": {
+      "title": "Union Parishad",
+      "description": "Union level administrative boundary",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "nameBangla": {
+          "type": "string"
+        },
+        "nameEnglish": {
+          "type": "string"
+        },
+        "locationId": {
+          "type": "string",
+          "description": "Foreign key to Location"
+        },
+        "chairmanName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "nameBangla"
+      ]
+    },
+    "Village": {
+      "title": "Village / Ward",
+      "description": "Village level boundary linked to Union",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "nameBangla": {
+          "type": "string"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        },
+        "wardNumber": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "nameBangla",
+        "unionId"
+      ]
+    },
+    "Category": {
+      "title": "Service & Item Category",
+      "description": "Taxonomy category for services, businesses, institutions",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "slug"
+      ]
+    },
+    "Service": {
+      "title": "Digital & Municipal Service",
+      "description": "Digital citizen service offered by municipality/upazila",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "categoryId": {
+          "type": "string",
+          "description": "Foreign key to Category"
+        },
+        "title": {
+          "type": "string"
+        },
+        "fee": {
+          "type": "number"
+        },
+        "processingTime": {
+          "type": "string"
+        },
+        "requiredDocuments": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "categoryId",
+        "title"
+      ]
+    },
+    "ServiceProvider": {
+      "title": "Service Provider / Specialist",
+      "description": "Individual mistri, electrician, plumber, teacher, driver, etc.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "name": {
+          "type": "string"
+        },
+        "serviceType": {
+          "type": "string"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        },
+        "villageId": {
+          "type": "string",
+          "description": "Foreign key to Village"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number"
+        },
+        "isVerified": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "name",
+        "serviceType",
+        "phone"
+      ]
+    },
+    "Business": {
+      "title": "Business Listing",
+      "description": "Local shop, market, company or trade establishment",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "categoryId": {
+          "type": "string",
+          "description": "Foreign key to Category"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "isVerified": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "name",
+        "phone"
+      ]
+    },
+    "Hospital": {
+      "title": "Hospital / Clinic",
+      "description": "Medical hospital, clinic or health center",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "emergencyPhone": {
+          "type": "string"
+        },
+        "ambulanceAvailable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "emergencyPhone"
+      ]
+    },
+    "Doctor": {
+      "title": "Doctor / Specialist",
+      "description": "Medical practitioner with chamber schedule",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "hospitalId": {
+          "type": "string",
+          "description": "Foreign key to Hospital"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User optional"
+        },
+        "name": {
+          "type": "string"
+        },
+        "specialty": {
+          "type": "string"
+        },
+        "qualifications": {
+          "type": "string"
+        },
+        "chamberAddress": {
+          "type": "string"
+        },
+        "serialPhone": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "specialty",
+        "serialPhone"
+      ]
+    },
+    "DiagnosticCenter": {
+      "title": "Diagnostic & Pathology Center",
+      "description": "Diagnostic lab, x-ray, blood testing unit",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        },
+        "name": {
+          "type": "string"
+        },
+        "testsOffered": {
+          "type": "array"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "discountPercentage": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "phone"
+      ]
+    },
+    "EducationalInstitution": {
+      "title": "Educational Institution",
+      "description": "School, college, madrasa, university in Puthia",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        },
+        "name": {
+          "type": "string"
+        },
+        "eiin": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "headName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "Bank": {
+      "title": "Bank & ATM Branch",
+      "description": "Bank branch, agent banking, ATM booth",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        },
+        "bankName": {
+          "type": "string"
+        },
+        "branchName": {
+          "type": "string"
+        },
+        "routingNumber": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "bankName",
+        "branchName"
+      ]
+    },
+    "NGO": {
+      "title": "NGO & Foundation",
+      "description": "Non-governmental social organization",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "registrationNumber": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "phone"
+      ]
+    },
+    "EmergencyService": {
+      "title": "Emergency Hotline",
+      "description": "Police, Fire service, Ambulance, Hotline",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "hotline": {
+          "type": "string"
+        },
+        "unionId": {
+          "type": "string",
+          "description": "Foreign key to Union"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "hotline"
+      ]
+    },
+    "Transport": {
+      "title": "Transport & Vehicle",
+      "description": "Bus, Train, Rental Car, Rickshaw stand",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "type": {
+          "type": "string"
+        },
+        "route": {
+          "type": "string"
+        },
+        "driverName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "phone"
+      ]
+    },
+    "Tourism": {
+      "title": "Tourist Spot & Heritage",
+      "description": "Puthia Rajbari, Shiva Temple, historical places",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title"
+      ]
+    },
+    "Job": {
+      "title": "Job Circular",
+      "description": "Local employment & career opportunity",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "publisherId": {
+          "type": "string",
+          "description": "Foreign key to User or Business"
+        },
+        "title": {
+          "type": "string"
+        },
+        "organization": {
+          "type": "string"
+        },
+        "salary": {
+          "type": "string"
+        },
+        "deadline": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "publisherId"
+      ]
+    },
+    "News": {
+      "title": "Local News / Bulletin",
+      "description": "Local news, administrative notices, press release",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "authorId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "isVerified": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "authorId",
+        "title",
+        "content"
+      ]
+    },
+    "Post": {
+      "title": "Citizen Post / Community Feed",
+      "description": "User created public wall post",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "authorId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "content": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        },
+        "likesCount": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "authorId",
+        "content"
+      ]
+    },
+    "Review": {
+      "title": "User Review",
+      "description": "Review written for business, hospital, doctor, or provider",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "targetId": {
+          "type": "string",
+          "description": "Foreign key to Business, Doctor, Provider"
+        },
+        "targetType": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "targetId",
+        "rating"
+      ]
+    },
+    "Rating": {
+      "title": "Aggregated Rating",
+      "description": "Calculated total score and rating count",
+      "type": "object",
+      "properties": {
+        "targetId": {
+          "type": "string"
+        },
+        "averageRating": {
+          "type": "number"
+        },
+        "totalReviews": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "targetId",
+        "averageRating"
+      ]
+    },
+    "Bookmark": {
+      "title": "Saved Item / Bookmark",
+      "description": "User saved service, business, or news",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "itemId": {
+          "type": "string"
+        },
+        "itemType": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "itemId"
+      ]
+    },
+    "Application": {
+      "title": "Service Application",
+      "description": "Citizen request for certificate, trade license, etc.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "applicantId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "serviceId": {
+          "type": "string",
+          "description": "Foreign key to Service"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Processing",
+            "Approved",
+            "Rejected"
+          ]
+        },
+        "trackingNumber": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "applicantId",
+        "serviceId",
+        "status"
+      ]
+    },
+    "Advertisement": {
+      "title": "Promotional Banner / Ad",
+      "description": "Paid merchant banner or sponsored listing",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "advertiserId": {
+          "type": "string",
+          "description": "Foreign key to User/Business"
+        },
+        "bannerUrl": {
+          "type": "string"
+        },
+        "targetUrl": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "active",
+            "expired"
+          ]
+        },
+        "expiryDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "advertiserId",
+        "bannerUrl"
+      ]
+    },
+    "Notification": {
+      "title": "User Notification",
+      "description": "In-app system notification message",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "title": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "read": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "title",
+        "message"
+      ]
+    },
+    "Reward": {
+      "title": "Reward Point Claim",
+      "description": "Gamification reward redeemed by user",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "rewardName": {
+          "type": "string"
+        },
+        "pointsSpent": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "pointsSpent"
+      ]
+    },
+    "Point": {
+      "title": "Citizen Activity Point",
+      "description": "Points earned through posts, reviews, verifications",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "totalPoints": {
+          "type": "number"
+        },
+        "badgeLevel": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "userId",
+        "totalPoints"
+      ]
+    },
+    "Badge": {
+      "title": "User Honor Badge",
+      "description": "Badge awarded for citizenship contributions",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "minPoints": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "minPoints"
+      ]
+    },
+    "Report": {
+      "title": "Content / Abuse Report",
+      "description": "Citizen report against fake news or spam",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "reporterId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "targetId": {
+          "type": "string"
+        },
+        "targetType": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "investigating",
+            "resolved"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "reporterId",
+        "targetId",
+        "reason"
+      ]
+    },
+    "Verification": {
+      "title": "NID / Business Verification Request",
+      "description": "Verification document uploaded by user/merchant",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "docType": {
+          "type": "string"
+        },
+        "docUrl": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "docType",
+        "docUrl"
+      ]
+    },
+    "SupportTicket": {
+      "title": "Citizen Support Ticket / GRS Complaint",
+      "description": "Helpdesk query or municipal complaint",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "in_progress",
+            "closed"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "subject",
+        "message"
+      ]
+    },
+    "ActivityLog": {
+      "title": "System Audit Log",
+      "description": "Traceability log for admin and user actions",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "actorId": {
+          "type": "string",
+          "description": "Foreign key to User"
+        },
+        "action": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "actorId",
+        "action"
+      ]
+    },
+    "FriendRequest": {
+      "title": "Friend Request",
+      "description": "Friend request between two citizens",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "senderId": {
+          "type": "string"
+        },
+        "senderName": {
+          "type": "string"
+        },
+        "senderAvatar": {
+          "type": "string"
+        },
+        "senderUnion": {
+          "type": "string"
+        },
+        "senderRole": {
+          "type": "string"
+        },
+        "receiverId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "accepted",
+            "declined"
+          ]
+        },
+        "createdAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "senderId",
+        "receiverId",
+        "status"
+      ]
+    },
+    "Follow": {
+      "title": "User Follower",
+      "description": "Follow relationship between citizens",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "followerId": {
+          "type": "string"
+        },
+        "followingId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "followerId",
+        "followingId"
+      ]
+    },
+    "Block": {
+      "title": "User Block",
+      "description": "Block constraint between citizens",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "blockedBy": {
+          "type": "string"
+        },
+        "blockedUser": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "blockedBy",
+        "blockedUser"
+      ]
+    },
+    "PrivacySettings": {
+      "title": "User Privacy Settings",
+      "description": "Privacy controls for a citizen profile",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "whoCanSendRequest": {
+          "type": "string",
+          "enum": [
+            "Everyone",
+            "FriendsOfFriends",
+            "Nobody"
+          ]
+        },
+        "whoCanViewFriends": {
+          "type": "string",
+          "enum": [
+            "Everyone",
+            "Friends",
+            "OnlyMe"
+          ]
+        },
+        "whoCanFollowMe": {
+          "type": "string",
+          "enum": [
+            "Everyone",
+            "Friends",
+            "Nobody"
+          ]
+        }
+      },
+      "required": [
+        "userId"
+      ]
+    },
+    "Story": {
+      "title": "Citizen Story",
+      "description": "A 24-hour temporary story posted by a citizen",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "userAvatar": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "image",
+            "video",
+            "text"
+          ]
+        },
+        "storyImage": {
+          "type": "string"
+        },
+        "storyVideo": {
+          "type": "string"
+        },
+        "textBio": {
+          "type": "string"
+        },
+        "bgColor": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "number"
+        },
+        "viewers": {
+          "type": "array"
+        },
+        "reactions": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "createdAt"
+      ]
+    },
+    "StoryHighlight": {
+      "title": "Story Highlight",
+      "description": "A collection of archived stories grouped on a user's profile",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "coverImage": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "number"
+        },
+        "storyIds": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "title",
+        "createdAt",
+        "storyIds"
+      ]
+    },
+    "Reel": {
+      "title": "Reel Short Video",
+      "description": "Vertical short video in Adda Reels",
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "type": "string",
+          "description": "Author UID"
+        },
+        "authorName": {
+          "type": "string"
+        },
+        "authorUsername": {
+          "type": "string"
+        },
+        "authorAvatar": {
+          "type": "string"
+        },
+        "isVerified": {
+          "type": "boolean"
+        },
+        "videoUrl": {
+          "type": "string"
+        },
+        "thumbnailUrl": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "hashtags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mentions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "location": {
+          "type": "string"
+        },
+        "audioTitle": {
+          "type": "string"
+        },
+        "audioUrl": {
+          "type": "string"
+        },
+        "originalAudio": {
+          "type": "boolean"
+        },
+        "duration": {
+          "type": "number"
+        },
+        "privacy": {
+          "type": "string",
+          "enum": [
+            "public",
+            "friends",
+            "followers",
+            "only_me"
+          ]
+        },
+        "viewsCount": {
+          "type": "number"
+        },
+        "likesCount": {
+          "type": "number"
+        },
+        "reactionsCount": {
+          "type": "number"
+        },
+        "commentsCount": {
+          "type": "number"
+        },
+        "sharesCount": {
+          "type": "number"
+        },
+        "savesCount": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "published",
+            "processing",
+            "draft",
+            "archived"
+          ]
+        },
+        "createdAt": {
+          "type": "number"
+        },
+        "updatedAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "authorId",
+        "authorName",
+        "videoUrl"
+      ]
+    },
+    "ReelComment": {
+      "title": "Reel Comment",
+      "description": "User comment or reply on a reel",
+      "type": "object",
+      "properties": {
+        "reelId": {
+          "type": "string"
+        },
+        "authorId": {
+          "type": "string"
+        },
+        "authorName": {
+          "type": "string"
+        },
+        "authorAvatar": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "likes": {
+          "type": "number"
+        },
+        "parentId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reelId",
+        "authorId",
+        "text"
+      ]
+    },
+    "ReelAudio": {
+      "title": "Reel Audio Track",
+      "description": "Music or audio track available in Reels audio library",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "artist": {
+          "type": "string"
+        },
+        "audioUrl": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "number"
+        },
+        "category": {
+          "type": "string"
+        },
+        "coverUrl": {
+          "type": "string"
+        },
+        "useCount": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "title",
+        "artist",
+        "audioUrl"
+      ]
+    },
+    "ReelReport": {
+      "title": "Reel Report",
+      "description": "Abuse or content policy violation report on a reel",
+      "type": "object",
+      "properties": {
+        "reelId": {
+          "type": "string"
+        },
+        "reporterId": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "reviewed",
+            "dismissed",
+            "action_taken"
+          ]
+        },
+        "createdAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "reelId",
+        "reporterId",
+        "reason"
+      ]
+    },
+    "MemoryPreference": {
+      "title": "Memory Preference",
+      "description": "User preferences for social memories and On This Day features",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Target user ID"
+        },
+        "hiddenMemories": {
+          "type": "array",
+          "description": "List of hidden memory IDs"
+        },
+        "hiddenPeople": {
+          "type": "array",
+          "description": "List of user IDs hidden from memories"
+        },
+        "hiddenDates": {
+          "type": "array",
+          "description": "List of date filters or ranges hidden from memories"
+        },
+        "notificationsEnabled": {
+          "type": "boolean",
+          "description": "Whether daily memory notifications are enabled"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": [
+        "userId"
+      ]
+    },
+    "SearchConfig": {
+      "type": "object",
+      "properties": {
+        "instanceUrl": {
+          "type": "string",
+          "description": "Meilisearch endpoint URL"
+        },
+        "apiKey": {
+          "type": "string",
+          "description": "Meilisearch master or private API key"
+        },
+        "primaryIndex": {
+          "type": "string",
+          "description": "Default search index name"
+        },
+        "syncedIndices": {
+          "type": "array",
+          "description": "List of Firestore collections synced with Meilisearch"
+        },
+        "autoSyncEnabled": {
+          "type": "boolean",
+          "description": "Whether real-time Firestore mutations are synced to search index"
+        },
+        "rankingRules": {
+          "type": "array",
+          "description": "Ranking rule order for relevance scoring"
+        },
+        "synonyms": {
+          "type": "object",
+          "description": "Bangla synonym dictionary mapping"
+        },
+        "totalDocumentsIndexed": {
+          "type": "number",
+          "description": "Total count of indexed documents"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last reindex timestamp"
+        }
+      },
+      "required": [
+        "instanceUrl",
+        "primaryIndex"
+      ]
+    },
+    "AuditLogRecord": {
+      "type": "object",
+      "properties": {
+        "actorUid": {
+          "type": "string",
+          "description": "UID of the user/admin performing the action"
+        },
+        "user": {
+          "type": "string",
+          "description": "Name or display title of the actor (কে)"
+        },
+        "userEmail": {
+          "type": "string",
+          "description": "Email address of the actor"
+        },
+        "actorRole": {
+          "type": "string",
+          "description": "Role of the actor (super_admin, admin, moderator, editor, staff, system, user)"
+        },
+        "action": {
+          "type": "string",
+          "description": "Action performed code or title (কী করেছে)"
+        },
+        "details": {
+          "type": "string",
+          "description": "Human-readable description of the operation"
+        },
+        "category": {
+          "type": "string",
+          "description": "Domain category (user, security, content, system, financial, service)"
+        },
+        "severity": {
+          "type": "string",
+          "description": "Severity level (info, warning, critical)"
+        },
+        "targetType": {
+          "type": "string",
+          "description": "Entity collection or module targeted"
+        },
+        "targetId": {
+          "type": "string",
+          "description": "ID of the target document or user"
+        },
+        "targetName": {
+          "type": "string",
+          "description": "Name/Title of the target record"
+        },
+        "changedFields": {
+          "type": "array",
+          "description": "List of field names modified (কোন তথ্য পরিবর্তন করেছে)"
+        },
+        "previousState": {
+          "type": "object",
+          "description": "State of the data before the change (আগের অবস্থা)"
+        },
+        "newState": {
+          "type": "object",
+          "description": "State of the data after the change (পরের অবস্থা)"
+        },
+        "changes": {
+          "type": "string",
+          "description": "Serialized JSON diff of key-value changes ({ field: { old, new } })"
+        },
+        "ipAddress": {
+          "type": "string",
+          "description": "Client IP address or device telemetry"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when action occurred (কখন)"
+        }
+      },
+      "required": [
+        "user",
+        "action",
+        "details"
+      ]
+    },
+    "SiteSettings": {
+      "title": "Site Settings & Branding Configuration",
+      "description": "Global system configurations including website header, footer, copyright notice, developer attribution, logo, SEO, and security policies",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "siteName": { "type": "string" },
+        "siteLogoUrl": { "type": "string" },
+        "headerText": { "type": "string" },
+        "footerText": { "type": "string" },
+        "showFooter": { "type": "boolean" },
+        "developerLabel": { "type": "string" },
+        "developerName": { "type": "string" },
+        "developerLink": { "type": "string" },
+        "developerHeartEmoji": { "type": "string" },
+        "showDeveloperCredit": { "type": "boolean" },
+        "footerBgColor": { "type": "string" },
+        "footerTextColor": { "type": "string" },
+        "footerAccentColor": { "type": "string" },
+        "contactPhone": { "type": "string" },
+        "contactEmail": { "type": "string" },
+        "contactAddress": { "type": "string" },
+        "socialLinks": { "type": "object" },
+        "seoTitle": { "type": "string", "description": "Primary SEO meta title" },
+        "seoDescription": { "type": "string", "description": "Primary SEO meta description" },
+        "seoKeywords": { "type": "string", "description": "Comma separated keywords" },
+        "ogImageUrl": { "type": "string", "description": "OpenGraph share banner image URL" },
+        "ogTitle": { "type": "string", "description": "OpenGraph custom title" },
+        "ogDescription": { "type": "string", "description": "OpenGraph custom description" },
+        "ogType": { "type": "string", "description": "OpenGraph type (e.g. website, article)" },
+        "twitterCard": { "type": "string", "enum": ["summary_large_image", "summary"] },
+        "twitterTitle": { "type": "string", "description": "Twitter card title" },
+        "twitterDescription": { "type": "string", "description": "Twitter card description" },
+        "twitterImage": { "type": "string", "description": "Twitter card image URL" },
+        "canonicalUrl": { "type": "string", "description": "Canonical site URL" },
+        "robotsIndex": { "type": "boolean", "description": "Allow search engines to index" },
+        "robotsFollow": { "type": "boolean", "description": "Allow search engines to follow links" },
+        "authorName": { "type": "string", "description": "Site author or organization name" },
+        "geoRegion": { "type": "string", "description": "Geo region (e.g. BD-54)" },
+        "geoPlacename": { "type": "string", "description": "Geo placename (e.g. Puthia, Rajshahi)" },
+        "geoPosition": { "type": "string", "description": "Geo coordinates" },
+        "googleSearchConsole": { "type": "string", "description": "Google Search Console verification meta tag content" },
+        "bingVerification": { "type": "string", "description": "Bing Webmaster verification code" },
+        "googleAnalyticsId": { "type": "string", "description": "GA4 Measurement ID" },
+        "schemaJsonLd": { "type": "string", "description": "Custom Schema.org JSON-LD structured data string" },
+        "isMaintenanceMode": { "type": "boolean" },
+        "showHeroSlider": { "type": "boolean" },
+        "heroSliderAutoplayDelay": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "siteName"]
+    },
+    "HeroSlide": {
+      "title": "Hero Carousel Slide Item",
+      "description": "Interactive carousel slide on the homepage with title, subtitle, CTA button, image, and category tags",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "description": "Slide main heading (শিরোনাম)" },
+        "subtitle": { "type": "string", "description": "Slide sub-heading or description (উপশিরোনাম)" },
+        "image": { "type": "string", "description": "Background image URL (ছবি)" },
+        "cta": { "type": "string", "description": "Button text (যেমন: বিস্তারিত দেখুন)" },
+        "link": { "type": "string", "description": "Navigation link URL (যেমন: /news)" },
+        "tag": { "type": "string", "description": "Badge tag label (ট্যাগ)" },
+        "category": { "type": "string", "description": "Slide category (ক্যাটাগরি)" },
+        "emoji": { "type": "string", "description": "Category icon or emoji (ইমোজি)" },
+        "badgeColor": { "type": "string", "description": "Badge CSS classes" },
+        "gradient": { "type": "string", "description": "Overlay gradient style" },
+        "accentColor": { "type": "string", "description": "Accent highlight color" },
+        "buttonBg": { "type": "string", "description": "Button background CSS" },
+        "order": { "type": "number", "description": "Display order index (ক্রম)" },
+        "isActive": { "type": "boolean", "description": "Active visibility status (সক্রিয়/নিষ্ক্রিয়)" },
+        "stats": { "type": "string", "description": "Optional secondary badge/stats" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "image", "link", "cta"]
+    },
+    "NoticeItem": {
+      "title": "Notice Item & Emergency Ticker",
+      "description": "Emergency notices and homepage scrolling marquee ticker items",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "description": "Notice title" },
+        "text": { "type": "string", "description": "Ticker message and summary" },
+        "content": { "type": "string", "description": "Detailed notice body" },
+        "color": { "type": "string", "description": "Accent hex color" },
+        "link": { "type": "string", "description": "Destination link" },
+        "isActive": { "type": "boolean", "description": "Active status" },
+        "isPinned": { "type": "boolean", "description": "Pinned to top" },
+        "order": { "type": "number", "description": "Display order index" },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+        "status": { "type": "string", "enum": ["published", "draft", "scheduled"] },
+        "publishAt": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "text", "isActive", "order"]
+    },
+    "UserPresence": {
+      "title": "Real-time User Online Presence",
+      "description": "Live active user session tracking with heartbeat timestamp, route, device, location and role data",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Session ID or UID" },
+        "userId": { "type": "string", "description": "Auth UID if logged in or guest" },
+        "userName": { "type": "string", "description": "Display name" },
+        "userEmail": { "type": "string", "description": "User email address" },
+        "userAvatar": { "type": "string", "description": "Profile picture URL" },
+        "role": { "type": "string", "description": "User role (super_admin, admin, moderator, editor, user, guest)" },
+        "currentPath": { "type": "string", "description": "Active URL pathname (e.g. /news, /admin)" },
+        "pageTitle": { "type": "string", "description": "Title of the page currently browsed" },
+        "deviceType": { "type": "string", "description": "mobile, tablet, or desktop" },
+        "browser": { "type": "string", "description": "Browser name" },
+        "os": { "type": "string", "description": "Operating system" },
+        "location": { "type": "string", "description": "Approx location or union name" },
+        "status": { "type": "string", "enum": ["online", "idle", "away", "disconnected"] },
+        "lastSeenAt": { "type": "string", "format": "date-time", "description": "ISO timestamp of last heartbeat" },
+        "startedAt": { "type": "string", "format": "date-time", "description": "Session start timestamp" },
+        "durationSeconds": { "type": "number", "description": "Total duration in seconds" },
+        "isRegistered": { "type": "boolean", "description": "Whether visitor is logged in" },
+        "isKicked": { "type": "boolean", "description": "Whether admin kicked the session" },
+        "kickReason": { "type": "string", "description": "Admin kick reason if applicable" },
+        "broadcastAlert": { "type": "string", "description": "Live flash notice sent to session" }
+      },
+      "required": ["id", "status", "lastSeenAt", "currentPath"]
+    }
+  },
+  "firestore": {
+    "/user_presences/{presenceId}": {
+      "schema": {
+        "$ref": "#/entities/UserPresence"
+      },
+      "description": "Real-time user online presence, heartbeat and session telemetry tracking"
+    },
+    "/notice_items/{noticeId}": {
+      "schema": {
+        "$ref": "#/entities/NoticeItem"
+      },
+      "description": "Homepage notice ticker and official emergency notice announcements"
+    },
+    "/hero_slides/{slideId}": {
+      "schema": {
+        "$ref": "#/entities/HeroSlide"
+      },
+      "description": "Homepage hero carousel slider items and banners managed by Super Admin"
+    },
+    "/site_settings/{settingId}": {
+      "schema": {
+        "$ref": "#/entities/SiteSettings"
+      },
+      "description": "System-wide branding, header, footer copyright, and developer attribution configurations"
+    },
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "Core users"
+    },
+    "/user_profiles/{profileId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "User profiles"
+    },
+    "/locations/{locationId}": {
+      "schema": {
+        "$ref": "#/entities/Location"
+      },
+      "description": "Geographical boundaries"
+    },
+    "/unions/{unionId}": {
+      "schema": {
+        "$ref": "#/entities/Union"
+      },
+      "description": "Union Parishad boundaries"
+    },
+    "/villages/{villageId}": {
+      "schema": {
+        "$ref": "#/entities/Village"
+      },
+      "description": "Village / ward boundaries"
+    },
+    "/categories/{categoryId}": {
+      "schema": {
+        "$ref": "#/entities/Category"
+      },
+      "description": "Taxonomy categories"
+    },
+    "/services/{serviceId}": {
+      "schema": {
+        "$ref": "#/entities/Service"
+      },
+      "description": "Digital citizen services"
+    },
+    "/service_providers/{providerId}": {
+      "schema": {
+        "$ref": "#/entities/ServiceProvider"
+      },
+      "description": "Independent mistri / specialist providers"
+    },
+    "/businesses/{businessId}": {
+      "schema": {
+        "$ref": "#/entities/Business"
+      },
+      "description": "Commercial business listings"
+    },
+    "/hospitals/{hospitalId}": {
+      "schema": {
+        "$ref": "#/entities/Hospital"
+      },
+      "description": "Hospitals & health centers"
+    },
+    "/doctors/{doctorId}": {
+      "schema": {
+        "$ref": "#/entities/Doctor"
+      },
+      "description": "Medical doctors & specialists"
+    },
+    "/diagnostic_centers/{diagnosticId}": {
+      "schema": {
+        "$ref": "#/entities/DiagnosticCenter"
+      },
+      "description": "Pathology and diagnostic units"
+    },
+    "/educational_institutions/{instId}": {
+      "schema": {
+        "$ref": "#/entities/EducationalInstitution"
+      },
+      "description": "Schools, colleges, madrasas"
+    },
+    "/banks/{bankId}": {
+      "schema": {
+        "$ref": "#/entities/Bank"
+      },
+      "description": "Bank branches & agent outlets"
+    },
+    "/ngos/{ngoId}": {
+      "schema": {
+        "$ref": "#/entities/NGO"
+      },
+      "description": "NGOs & foundation directory"
+    },
+    "/emergency_services/{serviceId}": {
+      "schema": {
+        "$ref": "#/entities/EmergencyService"
+      },
+      "description": "Emergency hotlines"
+    },
+    "/transport/{transportId}": {
+      "schema": {
+        "$ref": "#/entities/Transport"
+      },
+      "description": "Vehicles & transport stands"
+    },
+    "/tourism/{spotId}": {
+      "schema": {
+        "$ref": "#/entities/Tourism"
+      },
+      "description": "Heritage and tourist spots"
+    },
+    "/jobs/{jobId}": {
+      "schema": {
+        "$ref": "#/entities/Job"
+      },
+      "description": "Employment & job postings"
+    },
+    "/news/{newsId}": {
+      "schema": {
+        "$ref": "#/entities/News"
+      },
+      "description": "News & public notices"
+    },
+    "/posts/{postId}": {
+      "schema": {
+        "$ref": "#/entities/Post"
+      },
+      "description": "Citizen timeline posts"
+    },
+    "/reviews/{reviewId}": {
+      "schema": {
+        "$ref": "#/entities/Review"
+      },
+      "description": "Reviews on entities"
+    },
+    "/ratings/{targetId}": {
+      "schema": {
+        "$ref": "#/entities/Rating"
+      },
+      "description": "Aggregated rating document"
+    },
+    "/bookmarks/{bookmarkId}": {
+      "schema": {
+        "$ref": "#/entities/Bookmark"
+      },
+      "description": "Saved items by user"
+    },
+    "/applications/{applicationId}": {
+      "schema": {
+        "$ref": "#/entities/Application"
+      },
+      "description": "Citizen service applications"
+    },
+    "/advertisements/{adId}": {
+      "schema": {
+        "$ref": "#/entities/Advertisement"
+      },
+      "description": "Paid merchant banner ads"
+    },
+    "/notifications/{notifId}": {
+      "schema": {
+        "$ref": "#/entities/Notification"
+      },
+      "description": "User in-app notifications"
+    },
+    "/rewards/{rewardId}": {
+      "schema": {
+        "$ref": "#/entities/Reward"
+      },
+      "description": "Redeemed reward points"
+    },
+    "/points/{userId}": {
+      "schema": {
+        "$ref": "#/entities/Point"
+      },
+      "description": "Citizen accumulated activity points"
+    },
+    "/badges/{badgeId}": {
+      "schema": {
+        "$ref": "#/entities/Badge"
+      },
+      "description": "Available achievement badges"
+    },
+    "/reports/{reportId}": {
+      "schema": {
+        "$ref": "#/entities/Report"
+      },
+      "description": "Citizen abuse reports"
+    },
+    "/verifications/{verificationId}": {
+      "schema": {
+        "$ref": "#/entities/Verification"
+      },
+      "description": "Identity/NID verification docs"
+    },
+    "/support_tickets/{ticketId}": {
+      "schema": {
+        "$ref": "#/entities/SupportTicket"
+      },
+      "description": "Citizen GRS support tickets"
+    },
+    "/activity_logs/{logId}": {
+      "schema": {
+        "$ref": "#/entities/ActivityLog"
+      },
+      "description": "System audit logs"
+    },
+    "/friend_requests/{requestId}": {
+      "schema": {
+        "$ref": "#/entities/FriendRequest"
+      },
+      "description": "Citizen friend requests"
+    },
+    "/follows/{followId}": {
+      "schema": {
+        "$ref": "#/entities/Follow"
+      },
+      "description": "Citizen follow relationships"
+    },
+    "/blocks/{blockId}": {
+      "schema": {
+        "$ref": "#/entities/Block"
+      },
+      "description": "Mutual citizen block list"
+    },
+    "/privacy_settings/{userId}": {
+      "schema": {
+        "$ref": "#/entities/PrivacySettings"
+      },
+      "description": "Citizen privacy controls"
+    },
+    "/stories/{storyId}": {
+      "schema": {
+        "$ref": "#/entities/Story"
+      },
+      "description": "Temporary 24h stories"
+    },
+    "/story_highlights/{highlightId}": {
+      "schema": {
+        "$ref": "#/entities/StoryHighlight"
+      },
+      "description": "Custom story highlights on profiles"
+    },
+    "/reels/{reelId}": {
+      "schema": {
+        "$ref": "#/entities/Reel"
+      },
+      "description": "Short video reels collection"
+    },
+    "/reels/{reelId}/comments/{commentId}": {
+      "schema": {
+        "$ref": "#/entities/ReelComment"
+      },
+      "description": "Comments on a short video reel"
+    },
+    "/reel_audio/{audioId}": {
+      "schema": {
+        "$ref": "#/entities/ReelAudio"
+      },
+      "description": "Curated audio library for reels"
+    },
+    "/reel_reports/{reportId}": {
+      "schema": {
+        "$ref": "#/entities/ReelReport"
+      },
+      "description": "Reports submitted on reels"
+    },
+    "/memory_preferences/{userId}": {
+      "schema": "MemoryPreference",
+      "description": "Per-user configuration for hidden memories, blocked dates, and memory alerts"
+    },
+    "/live_streams/{streamId}": {
+      "schema": "LiveStream",
+      "description": "Live video broadcast streams"
+    },
+    "/live_streams/{streamId}/comments/{commentId}": {
+      "schema": "LiveComment",
+      "description": "Real-time comments on a live video stream"
+    },
+    "/live_streams/{streamId}/reactions/{reactionId}": {
+      "schema": "LiveReaction",
+      "description": "Floating real-time reactions emitted on a live stream"
+    },
+    "/live_streams/{streamId}/viewers/{viewerId}": {
+      "schema": "LiveViewer",
+      "description": "Presence tracking for live video stream viewers"
+    },
+    "/live_reports/{reportId}": {
+      "schema": "LiveReport",
+      "description": "User reports on live video streams"
+    },
+    "/creator_wallets/{userId}": {
+      "schema": "CreatorWallet",
+      "description": "Ledger-based creator wallets and earnings"
+    },
+    "/monetization_profiles/{userId}": {
+      "schema": "CreatorMonetizationProfile",
+      "description": "Creator eligibility and monetization status"
+    },
+    "/star_transactions/{txId}": {
+      "schema": "StarTransaction",
+      "description": "Digital stars sent to support creators"
+    },
+    "/boosted_posts/{boostId}": {
+      "schema": "BoostedPost",
+      "description": "Targeted post boosts in local unions"
+    },
+    "/ad_campaigns/{adId}": {
+      "schema": "AdCampaign",
+      "description": "Advertiser ad campaigns"
+    },
+    "/withdrawals/{withdrawalId}": {
+      "schema": "WithdrawalRequest",
+      "description": "Payout and withdrawal requests"
+    },
+    "/wallet_ledgers/{ledgerId}": {
+      "schema": "WalletLedgerEntry",
+      "description": "Double-entry financial accounting log"
+    },
+    "/search_settings/{configId}": {
+      "schema": {
+        "$ref": "#/entities/SearchConfig"
+      },
+      "description": "Meilisearch configuration and global search engine settings"
+    },
+    "/audit_logs/{logId}": {
+      "schema": {
+        "$ref": "#/entities/AuditLogRecord"
+      },
+      "description": "Central system and administrative audit log trail with diff change records"
+    },
+    "/upazila_services/{serviceId}": {
+      "schema": "UpazilaService",
+      "description": "Master 63 upazila citizen services catalog documents"
+    },
+    "/upazila_services_submissions/{submissionId}": {
+      "schema": "UpazilaServiceSubmission",
+      "description": "User submitted new entries and information additions for 63 upazila services"
+    },
+    "/upazila_services_edits/{editId}": {
+      "schema": "UpazilaServiceEditRequest",
+      "description": "User proposed edit and correction requests for 63 upazila services"
+    },
+    "/upazila_services_reports/{reportId}": {
+      "schema": "UpazilaServiceReport",
+      "description": "User reported inaccurate or outdated info complaints for 63 upazila services"
+    },
+    "/admin_audit_logs/{logId}": {
+      "schema": {
+        "$ref": "#/entities/AuditLogRecord"
+      },
+      "description": "Security enforcement and administrative role audit trail"
+    }
+  }
+}

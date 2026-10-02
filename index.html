@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="bn" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <script>
+      (function() {
+        function isFsAssert(err) {
+          if (!err) return false;
+          var s = '';
+          try {
+            if (typeof err === 'string') s = err;
+            else if (err.message) s = String(err.message) + ' ' + String(err.stack || '');
+            else if (err.reason) s = String(err.reason.message || err.reason) + ' ' + String(err.reason.stack || '');
+            else if (err.stack) s = String(err.stack);
+            else s = String(err);
+          } catch (_) {
+            s = String(err);
+          }
+          return s.indexOf('INTERNAL ASSERTION FAILED') !== -1 ||
+                 s.indexOf('ca9') !== -1 ||
+                 s.indexOf('b815') !== -1 ||
+                 s.indexOf('WatchChangeAggregator') !== -1 ||
+                 s.indexOf('TargetState') !== -1 ||
+                 s.indexOf('Unexpected state') !== -1;
+        }
+        var prevOnError = window.onerror;
+        window.onerror = function(msg, src, line, col, err) {
+          if (isFsAssert(msg) || isFsAssert(err)) {
+            return true;
+          }
+          if (typeof prevOnError === 'function') {
+            return prevOnError.apply(this, arguments);
+          }
+          return false;
+        };
+        window.addEventListener('error', function(e) {
+          if (isFsAssert(e.error) || isFsAssert(e.message)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+        }, true);
+        window.addEventListener('unhandledrejection', function(e) {
+          if (isFsAssert(e.reason)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+        }, true);
+      })();
+    </script>
+    
+    <!-- Primary Meta Tags -->
+    <title>আমাদের পুঠিয়া – ঐতিহ্য থেকে ডিজিটাল ভবিষ্যতের পথে</title>
+    <meta name="title" content="আমাদের পুঠিয়া – ঐতিহ্য থেকে ডিজিটাল ভবিষ্যতের পথে" />
+    <meta name="description" content="পুঠিয়ার মানুষ, ইতিহাস, ঐতিহ্য, তথ্য ও প্রয়োজনীয় সেবাকে এক প্ল্যাটফর্মে যুক্ত করার ডিজিটাল উদ্যোগ।" />
+    <meta name="keywords" content="আমাদের পুঠিয়া, পুঠিয়া ডায়েরি, পুঠিয়া রাজবাড়ী, পুঠিয়া মন্দির কমপ্লেক্স, পুঠিয়া রাজশাহী, Puthia Rajbari, Puthia Upazila, Puthia Temple Complex, Puthia Doctors, পুঠিয়া হাসপাতাল, বানেশ্বর বাজার, রাজশাহী পর্যটন" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="author" content="আমাদের পুঠিয়া ওয়েব টিম" />
+    <meta name="language" content="Bangla" />
+    <meta name="geo.region" content="BD-54" />
+    <meta name="geo.placename" content="Puthia, Rajshahi" />
+    <meta name="geo.position" content="24.3683;88.8358" />
+    <meta name="ICBM" content="24.3683, 88.8358" />
+    <link rel="canonical" href="https://our-puthia-app.vercel.app/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="আমাদের পুঠিয়া" />
+    <meta property="og:locale" content="bn_BD" />
+    <meta property="og:url" content="https://our-puthia-app.vercel.app/" />
+    <meta property="og:title" content="আমাদের পুঠিয়া – ঐতিহ্য থেকে ডিজিটাল ভবিষ্যতের পথে" />
+    <meta property="og:description" content="পুঠিয়ার মানুষ, ইতিহাস, ঐতিহ্য, তথ্য ও প্রয়োজনীয় সেবাকে এক প্ল্যাটফর্মে যুক্ত করার ডিজিটাল উদ্যোগ।" />
+    <meta property="og:image" content="https://our-puthia-app.vercel.app/puthia_official_full_logo.jpg" />
+    <meta property="og:image:secure_url" content="https://our-puthia-app.vercel.app/puthia_official_full_logo.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="আমাদের পুঠিয়া অফিশিয়াল লোগো ও ব্যানার" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@amaderputhia" />
+    <meta name="twitter:title" content="আমাদের পুঠিয়া – ঐতিহ্য থেকে ডিজিটাল ভবিষ্যতের পথে" />
+    <meta name="twitter:description" content="পুঠিয়ার মানুষ, ইতিহাস, ঐতিহ্য, তথ্য ও প্রয়োজনীয় সেবাকে এক প্ল্যাটফর্মে যুক্ত করার ডিজিটাল উদ্যোগ।" />
+    <meta name="twitter:image" content="https://our-puthia-app.vercel.app/puthia_official_full_logo.jpg" />
+
+    <link rel="icon" type="image/jpeg" href="/puthia_official_icon_logo.jpg" />
+    <link rel="apple-touch-icon" href="/puthia_official_icon_logo.jpg" />
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#125836">
+
+    <!-- Structured Data (Schema.org JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://amaderputhia.gov.bd/#website",
+          "url": "https://amaderputhia.gov.bd/",
+          "name": "আমাদের পুঠিয়া",
+          "description": "পুঠিয়া উপজেলার সকল ডিজিটাল তথ্য ও নাগরিক সেবা হাব",
+          "inLanguage": "bn-BD",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://amaderputhia.gov.bd/?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "AdministrativeArea",
+          "@id": "https://amaderputhia.gov.bd/#puthia-upazila",
+          "name": "পুঠিয়া উপজেলা (Puthia Upazila)",
+          "alternateName": ["Puthia Rajbari", "পুঠিয়া রাজবাড়ী"],
+          "description": "রাজশাহী জেলার ঐতিহাসিক ও ঐতিহ্যবাহী উপজেলা পুঠিয়া, যা মহারানী হেমন্তকুমারী ও শিব মন্দিরের জন্য বিখ্যাত।",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 24.3683,
+            "longitude": 88.8358
+          },
+          "containedInPlace": {
+            "@type": "AdministrativeArea",
+            "name": "রাজশাহী জেলা",
+            "containedInPlace": {
+              "@type": "Country",
+              "name": "বাংলাদেশ"
+            }
+          }
+        },
+        {
+          "@type": "TouristAttraction",
+          "name": "পুঠিয়া রাজবাড়ী ও মন্দির কমপ্লেক্স (Puthia Temple Complex)",
+          "description": "বাংলাদেশের অন্যতম প্রাচীন টেরাকোটা সমৃদ্ধ হিন্দু মন্দির স্থাপত্য রাজবাড়ী ও ডোল মন্দির।",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "পুঠিয়া",
+            "addressRegion": "রাজশাহী",
+            "addressCountry": "BD"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Google Fonts & Resource Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
